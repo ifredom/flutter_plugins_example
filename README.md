@@ -1,12 +1,21 @@
 # flutter_plugins_example
 
-此项目演示: 蓝牙，webview, 地图，chart, websocket ......等第三方插件功能.
+演示: ble，webview, map，chart, websocket ......等第三方插件功能.
 
-直接 copy 对应文件夹即可在自己的项目中使用.
+copy file & use ！
 
 环境：
 flutter version: 1.22.1
 android sdk: 28
+
+## 功能插件列表
+
+- flutter_blue: 蓝牙 （√）
+- flutter_ble_lib: 蓝牙
+- flutter_webview: webview
+- flutter_webview_plugin: webview
+- permission_handler: 权限 （√）
+- screen_shot: 截图 & 二维码（√）
 
 ## 启动运行
 
