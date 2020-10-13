@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 import 'package:flutter_plugins_example/ui/widgets/appbar/custom_appbar.dart';
@@ -91,7 +92,7 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
       // 设备有两个名字 scanResult.peripheral.name 和 scanResult.advertisementData.localName 通常是一样得
       // 设备信号强度 scanResult.rssi
 
-      print('$deviceid $deviceName');
+      print('设备名称：$deviceName  设备Id: $deviceid');
 
       if (deviceName != null && !bleDevices.contains(bleDevice)) {
         _log.info('发现新设备： $deviceName $deviceid');
@@ -165,6 +166,8 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
         .then((_) => _checkPermissions())
         .catchError((e) => _log.severe("蓝牙开启失败"))
         .then((_) => _waitForBluetoothPoweredOn());
+
+    BotToast.showText(text: "插件初始化完成");
   }
 
   Future destroyBlue() async {
@@ -229,6 +232,7 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
                   _beginScan = false;
                 });
                 await _bleManager.stopPeripheralScan();
+                BotToast.showText(text: "停止扫描");
               },
             ),
           ),
@@ -237,6 +241,7 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
               child: Text("断开连接"),
               onPressed: () async {
                 await _bleManager.destroyClient();
+                BotToast.showText(text: "断开连接");
               },
             ),
           ),

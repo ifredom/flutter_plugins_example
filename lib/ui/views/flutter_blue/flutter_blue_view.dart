@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_plugins_example/ui/widgets/appbar/custom_appbar.dart';
@@ -27,7 +28,26 @@ class _FlutterblueViewState extends State<FlutterblueView> {
 
   Future initBlue() async {}
 
-  Future<void> _checkPermissions() async {}
+  // https://blog.csdn.net/qwe749082787/article/details/105712079
+  Future<void> _checkPermissions() async {
+    // 蓝牙扫描需要 定位权限！
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.locationWhenInUse,
+      Permission.locationAlways,
+    ].request();
+    print(statuses[Permission.locationAlways]);
+
+    if (statuses[Permission.location] == PermissionStatus.granted) {
+      BotToast.showText(text: "已授权定位");
+    }
+    if (statuses[Permission.locationWhenInUse] == PermissionStatus.granted) {
+      print("已授权使用时定位");
+    }
+    if (statuses[Permission.locationAlways] == PermissionStatus.granted) {
+      print("已授权总是定位");
+    }
+  }
 
   Future<void> _checkBluetoothState() async {
     flutterBlue.state.listen((state) {
@@ -43,6 +63,7 @@ class _FlutterblueViewState extends State<FlutterblueView> {
   void initState() {
     super.initState();
     _checkBluetoothState();
+    _checkPermissions();
   }
 
   @override
@@ -97,8 +118,8 @@ class _FlutterblueViewState extends State<FlutterblueView> {
         child: Text("扫描"),
         onPressed: () async {
           _dataSubscription = flutterBlue.scanResults.listen((results) {
-            print('扫描结果：');
-            print(results);
+            print('扫描结果：$results');
+            BotToast.showText(text: "扫描结果： $results");
             for (ScanResult item in results) {
               print('$item');
               print('${item.device.name} found! rssi: ${item.rssi}');
