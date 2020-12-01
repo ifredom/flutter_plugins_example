@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 import 'package:logging/logging.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'ble_devices.dart';
@@ -13,11 +14,15 @@ import 'device_repository.dart';
 
 typedef DeviceTapListener = void Function();
 
-// 可以蓝牙扫描
+/*
+ * 蓝牙工具类
+ */
 class BlueUtils {
   final _log = Logger('BlueUtils');
-  final BleManager _bleManager;
   final DeviceRepository _deviceRepository;
+
+  final BleManager _bleManager;
+  BleManager get bleManager => _bleManager;
 
   Stream<BleDevice> get pickedDevice => _deviceRepository.pickedDevice.skipWhile((bleDevice) => bleDevice == null);
 
@@ -38,7 +43,7 @@ class BlueUtils {
   num _scanningCount = 0; // 扫描次数
   num get scanningCount => _scanningCount;
 
-  num _limitScanningCount = 10; // 扫描次数限制，防止找不到设备时，一直扫描
+  num _limitScanningCount = 600; // 扫描次数限制，防止找不到设备时，一直扫描
   num get limitScanningCount => _limitScanningCount;
 
   final List<BleDevice> _bleDevices = <BleDevice>[];
@@ -48,6 +53,8 @@ class BlueUtils {
   BluetoothState get bluetoothStatus => _bluetoothStatus;
 
   StreamController<BleDevice> _devicePickerController = StreamController<BleDevice>();
+  StreamController<BleDevice> get devicePickerController => _devicePickerController;
+
   Sink<BleDevice> get devicePicker => _devicePickerController.sink;
 
   BehaviorSubject<List<BleDevice>> _visibleDevicesController = BehaviorSubject<List<BleDevice>>.seeded(<BleDevice>[]);
@@ -62,11 +69,11 @@ class BlueUtils {
   Logger log;
   Logger logError;
 
-  // 构造，使用测试单一设备，暂时不用
+  // 构造，使用测试单一设备，暂时不使用
   BlueUtils(this._deviceRepository, this._bleManager) {
-    // var device = _deviceRepository.pickedDevice.value;
-    // _deviceController = BehaviorSubject<BleDevice>.seeded(device);
-    // print(device.toString());
+    var device = _deviceRepository.pickedDevice.value;
+    _deviceController = BehaviorSubject<BleDevice>.seeded(device);
+    print(device.toString());
 
     // if (device != null) {
     //   _connectionStateController = BehaviorSubject<PeripheralConnectionState>.seeded(
@@ -78,33 +85,31 @@ class BlueUtils {
     _devicePickerController.close();
   }
 
+  // 参考地址： https://github.com/Polidea/FlutterBleLib/blob/develop/example/lib/test_scenarios/peripheral_test_operations.dart
   Future<void> connectTo(ScanResult scanResult) async {
-    // https://github.com/Polidea/FlutterBleLib/blob/develop/example/lib/test_scenarios/peripheral_test_operations.dart
-    print('监听设备情况');
     _deviceController.stream.listen(print);
     _visibleDevicesController.stream.listen(print);
 
     _peripheral = scanResult.peripheral;
-    await _bleManager.stopPeripheralScan();
-
     _scanning = false;
 
-    print('！！！准备开始连接======');
+    print('=================准备开始连接=================');
     bool isConnected = await _peripheral.isConnected();
-    print("当前连接状态: $isConnected");
+    print("'=================当前连接状态isConnected=================: $isConnected");
 
     if (!isConnected) {
       await _peripheral.connect();
       isConnected = await _peripheral.isConnected();
-      print('连接之后得状态： $isConnected');
+      print('=================连接之后得状态=================： $isConnected');
     }
+    // debugPrintStack(label: '连接2', maxFrames: 2);
     await _peripheral.discoverAllServicesAndCharacteristics();
 
     List<Service> services = await _peripheral.services();
-    print("打印外围设备名称 \n${_peripheral.name}");
+    print("=================打印外围设备名称================= \n${_peripheral.name}");
     services.forEach((service) => print("发现服务 \n${service.uuid}"));
     Service service = services.first;
-    print("打印第一个服务的uuid \n${service.uuid}");
+    print("=================打印第一个服务的uuid================= \n${service.uuid}");
 
     List<Peripheral> connectedPeripherals = await _bleManager.connectedPeripherals([service.uuid]);
     print(connectedPeripherals);
@@ -112,42 +117,43 @@ class BlueUtils {
     List<Characteristic> characteristics = await service.characteristics();
     characteristics.forEach((characteristic) => print("打印特征值的uuid: ${characteristic.uuid}"));
     Characteristic characteristic = characteristics.first;
-    print("打印第一个特征值的uuid \n${characteristic.uuid}");
+    print("=================打印第一个特征值的uuid================= \n${characteristic.uuid}");
 
-    debugPrintStack(label: '准备读写', maxFrames: 3);
+    debugPrintStack(label: '准备读写数据', maxFrames: 3);
+    print("向设备写入数据");
     await _peripheral.writeCharacteristic(
-      service.uuid, // service
-      characteristic.uuid, // tx characteristic
+      service.uuid,
+      characteristic.uuid,
       Uint8List.fromList([0x66]),
       false,
     );
-    print("写入数据完成");
-
+    print("读取设备数据");
     await readCharacteristic(_peripheral);
   }
 
   Future<void> startScan() async {
-    print("开始扫描 startScan");
-    print("\n");
+    print("开始扫描 startScan\n");
+
     _scanning = true;
 
     _scanSubscription = _bleManager.startPeripheralScan().listen((scanResult) async {
       _scanningCount += 1;
       if (_scanningCount <= _limitScanningCount) {
-        // 设备有两个名字 scanResult.peripheral.name 和 scanResult.advertisementData.localName 通常是一样得.
-        // 信号强度(scanResult.rssi)
         var bleDevice =
             BleDevice.notConnected(scanResult.peripheral.name, scanResult.peripheral.identifier, scanResult.peripheral);
-        _bleDevices.add(bleDevice);
-        if (scanResult.advertisementData.localName != null && !_bleDevices.contains(bleDevice)) {
-          _log.info('发现新设备： ${scanResult.advertisementData.localName} ${scanResult.peripheral.identifier}');
 
+        // 这里的  scanResult.peripheral.name 与 scanResult.advertisementData.localName 看设备情况使用哪一种
+        if (scanResult.peripheral.name != null && !_bleDevices.contains(bleDevice)) {
+          _log.info('发现新设备： ${scanResult.peripheral.name} ${scanResult.peripheral.identifier}');
+          _bleDevices.add(bleDevice);
           _visibleDevicesController.add(_bleDevices.sublist(0));
         }
 
-        // 找到目标设备就停止扫描
+        // 我的的iPhone 11的设备id，固定写死:  BlueConfig.temperatureDeviceId
         if (scanResult.peripheral.identifier == BlueConfig.temperatureDeviceId) {
           print("找到目标设备： 名称：${scanResult.advertisementData.localName}  id值：${scanResult.peripheral.identifier}");
+
+          _peripheral = scanResult.peripheral;
           await _bleManager.stopPeripheralScan();
 
           var findDevice = DisconnectedBleDevice(
@@ -159,14 +165,16 @@ class BlueUtils {
         }
       } else {
         await _bleManager.stopPeripheralScan();
+        _scanningCount = 0;
       }
     });
   }
 
   /// 参考 https://github.com/leelai/flutter_ble/tree/e7429c445193724fbcd5836f52b7a9f05fac7ed1/lib/devices_list
-  // 初始化
+  /// 初始化
   Future init() async {
-    bleDevices.clear();
+    print("init进入");
+    _bleDevices.clear();
     await _bleManager
         .createClient(
             restoreStateIdentifier: "example-restore-state-identifier",
@@ -175,11 +183,12 @@ class BlueUtils {
                 _log.info("Restored peripheral: ${peripheral.name}");
               });
             })
-        .catchError((e) => _log.severe("创建蓝牙client失败"))
+        .catchError((e) => _log.severe("创建client实例失败"))
         .then((_) => _checkPermissions())
         .catchError((e) => _log.severe("蓝牙开启失败"))
-        .then((_) => _waitForBluetoothPoweredOn())
-        .then((_) => startScan());
+        .then((_) => _checkLocationPermissions())
+        .catchError((e) => _log.severe("定位权限未授权"))
+        .then((_) => _waitForBluetoothPoweredOn());
 
     if (_visibleDevicesController.isClosed) {
       _visibleDevicesController = BehaviorSubject<List<BleDevice>>.seeded(<BleDevice>[]);
@@ -193,6 +202,7 @@ class BlueUtils {
     // _devicePickerSubscription = _devicePickerController.stream.listen(_handlePickedDevice);
   }
 
+  // 监听链接状态
   Future<void> connect() async {
     _clearLogs();
     _deviceController.stream.listen((bleDevice) async {
@@ -218,15 +228,36 @@ class BlueUtils {
   // }
 
   Future<void> _checkPermissions() async {
-    // 此方法为运行时，权限检测（ android4.4不支持）
+    // 此方法为运行时，蓝牙权限检测（ android4.4不支持）
     if (Platform.isAndroid) {
       await _bleManager.enableRadio();
       _bluetoothStatus = await _bleManager.bluetoothState();
+      print("此时的蓝牙状态");
       print(_bluetoothStatus);
       if (_bluetoothStatus != BluetoothState.POWERED_ON) {
         return Future.error(Exception("请开启蓝牙"));
       }
     }
+  }
+
+  Future<void> _checkLocationPermissions() async {
+    print("检测定位权限，手机定位权限有3种情况");
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.locationWhenInUse,
+      Permission.locationAlways,
+    ].request();
+
+    if (statuses[Permission.location] == PermissionStatus.granted) {
+      print("已授权定位");
+    }
+    if (statuses[Permission.locationWhenInUse] == PermissionStatus.granted) {
+      print("已授权使用时定位");
+    }
+    if (statuses[Permission.locationAlways] == PermissionStatus.granted) {
+      print("已授权总是定位");
+    }
+    print("授权状态$statuses");
   }
 
   Future<void> _waitForBluetoothPoweredOn() async {
@@ -251,6 +282,7 @@ class BlueUtils {
     await _checkPermissions().then((_) => startScan()).catchError((e) => _log.severe("Couldn't refresh"));
   }
 
+  // 读取设备发送过来的数据
   Future<void> readCharacteristic(peripheral) async {
     print("读取临时配置");
     Service service = await peripheral.services().then(
@@ -274,7 +306,7 @@ class BlueUtils {
     _clearLogs();
     if (await _deviceController.stream.value.peripheral.isConnected()) {
       print("正在断开连接...");
-      await _deviceController.stream.value.peripheral.disconnectOrCancelConnection();
+      // await _deviceController.stream.value.peripheral.disconnectOrCancelConnection();
     }
     print("已断开!");
   }
@@ -285,7 +317,7 @@ class BlueUtils {
   }
 
   void dispose() async {
-    print("dispose cancel _devicePickerSubscription");
+    print("销毁页面");
     // await _devicePickerSubscription.cancel();
     await _visibleDevicesController.close();
     await _scanSubscription?.cancel();
@@ -299,7 +331,12 @@ class BlueUtils {
     await _connectionStateController?.drain();
     await _connectionStateController?.close();
 
-    await disconnect();
+    // await disconnect();
+  }
+
+  Future destroyBlue() async {
+    // await _peripheral.disconnectOrCancelConnection();
+    await _bleManager.destroyClient(); //remember to release native resources when you're done!
   }
 }
 

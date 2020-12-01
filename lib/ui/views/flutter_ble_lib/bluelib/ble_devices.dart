@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 
+/*
+ * 蓝牙设备定义
+ */
 abstract class BleDevice {
   String id;
   int counter = 0;

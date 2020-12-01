@@ -4,6 +4,9 @@ import 'ble_devices.dart';
 
 class MissingPickedDeviceException implements Exception {}
 
+/*
+ * 蓝牙设备统一管理
+ */
 class DeviceRepository {
   static BleDevice _bleDevice;
   BehaviorSubject<BleDevice> _deviceController;

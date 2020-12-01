@@ -1,15 +1,11 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_lib/flutter_ble_lib.dart';
-import 'package:flutter_plugins_example/ui/widgets/appbar/custom_appbar.dart';
 import 'package:logging/logging.dart';
-import 'package:rxdart/rxdart.dart';
-
-import 'bluelib/ble_devices.dart';
+import 'package:flutter_plugins_example/ui/views/flutter_ble_lib/bluelib/ble_devices.dart';
+import 'package:flutter_plugins_example/ui/views/flutter_ble_lib/bluelib/blue_utils.dart';
+import 'package:flutter_plugins_example/ui/views/flutter_ble_lib/bluelib/device_repository.dart';
+import 'package:flutter_plugins_example/ui/widgets/appbar/custom_appbar.dart';
 
 typedef DeviceTapListener = void Function();
 
@@ -24,156 +20,7 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
 
   bool _beginScan = false;
 
-  BleManager _bleManager = BleManager();
-
-  Peripheral peri;
-
-  final List<BleDevice> bleDevices = <BleDevice>[];
-
-  BluetoothState _bluetoothStatus = BluetoothState.UNKNOWN;
-
-  StreamSubscription<ScanResult> _scanSubscription;
-
-  StreamController<BleDevice> _devicePickerController = StreamController<BleDevice>();
-
-  ValueStream<List<BleDevice>> get visibleDevices => _visibleDevicesController.stream;
-
-  Sink<BleDevice> get devicePicker => _devicePickerController.sink;
-
-  BehaviorSubject<List<BleDevice>> _visibleDevicesController = BehaviorSubject<List<BleDevice>>.seeded(<BleDevice>[]);
-
-  Future<void> _checkPermissions() async {
-    // 此方法为运行时，权限检测（ android4.4不支持）
-    if (Platform.isAndroid) {
-      await _bleManager.enableRadio();
-      _bluetoothStatus = await _bleManager.bluetoothState();
-      print(_bluetoothStatus);
-      if (_bluetoothStatus != BluetoothState.POWERED_ON) {
-        return Future.error(Exception("请开启蓝牙"));
-      }
-    }
-  }
-
-  Future<void> _waitForBluetoothPoweredOn() async {
-    Completer completer = Completer();
-    StreamSubscription<BluetoothState> subscription;
-    subscription = _bleManager.observeBluetoothState(emitCurrentValue: true).listen((bluetoothState) async {
-      print("_waitForBluetoothPoweredOn: bluetoothState");
-      print(bluetoothState);
-      if (bluetoothState == BluetoothState.POWERED_ON && !completer.isCompleted) {
-        await subscription.cancel();
-        completer.complete();
-      }
-    });
-    return completer.future;
-  }
-
-  Future<void> refresh() async {
-    await _scanSubscription.cancel();
-    await _bleManager.stopPeripheralScan();
-    bleDevices.clear();
-    _visibleDevicesController.add(bleDevices.sublist(0));
-    await _checkPermissions().then((_) => _startScan()).catchError((e) => _log.severe("Couldn't refresh"));
-  }
-
-  Future<void> _startScan() async {
-    print("开始扫描 _startScan");
-    print("\n");
-
-    _scanSubscription = _bleManager.startPeripheralScan().listen((scanResult) async {
-      setState(() {
-        _beginScan = true;
-      });
-      String deviceid = scanResult.peripheral.identifier;
-      String deviceName = scanResult.advertisementData.localName;
-      var bleDevice =
-          BleDevice.notConnected(scanResult.peripheral.name, scanResult.peripheral.identifier, scanResult.peripheral);
-
-      // 设备有两个名字 scanResult.peripheral.name 和 scanResult.advertisementData.localName 通常是一样得
-      // 设备信号强度 scanResult.rssi
-
-      print('设备名称：$deviceName  设备Id: $deviceid');
-
-      if (deviceName != null && !bleDevices.contains(bleDevice)) {
-        _log.info('发现新设备： $deviceName $deviceid');
-        bleDevices.add(bleDevice);
-        _visibleDevicesController.add(bleDevices.sublist(0));
-      }
-
-      // https://github.com/Polidea/FlutterBleLib/blob/develop/example/lib/test_scenarios/peripheral_test_operations.dart
-      if (deviceid == "D0:11:A8:E5:67:B3") {
-        print("找到目标设备： 名称：$deviceName  id值：$deviceid");
-        print(scanResult.toString());
-        peri = scanResult.peripheral;
-        print('停止扫描');
-        await _bleManager.stopPeripheralScan();
-        setState(() {
-          _beginScan = false;
-        });
-
-        // peri.observeConnectionState(emitCurrentValue: true, completeOnDisconnect: true).listen((connectionState) {
-        //   print("外设【$deviceName ：$deviceid】 连接状态： $connectionState");
-        // });
-        print('！！！！！！！！准备开始连接=================');
-        bool isConnected = await peri.isConnected();
-        print("isConnected: $isConnected");
-
-        if (!isConnected) {
-          await peri.connect();
-          isConnected = await peri.isConnected();
-          print('连接之后得状态： $isConnected');
-        } //test if connected otherwise getting error connected already
-        // debugPrintStack(label: '连接2', maxFrames: 2);
-        await peri.discoverAllServicesAndCharacteristics();
-
-        List<Service> services = await peri.services();
-        print("打印外围设备名称 \n${peri.name}");
-        services.forEach((service) => print("发现服务 \n${service.uuid}"));
-        Service service = services.first;
-        print("打印第一个服务的uuid \n${service.uuid}");
-
-        List<Peripheral> connectedPeripherals = await _bleManager.connectedPeripherals([service.uuid]);
-        print(connectedPeripherals);
-
-        List<Characteristic> characteristics = await service.characteristics();
-        characteristics.forEach((characteristic) => print("打印特征值的uuid: ${characteristic.uuid}"));
-        Characteristic characteristic = characteristics.first;
-        print("打印第一个特征值的uuid \n${characteristic.uuid}");
-
-        debugPrintStack(label: '准备读写', maxFrames: 3);
-        await peri.writeCharacteristic(
-          service.uuid, // service
-          characteristic.uuid, // tx characteristic
-          Uint8List.fromList([0x66]),
-          false,
-        );
-        print("写入数据完成");
-      }
-    });
-  }
-
-  /// 参考 https://github.com/leelai/flutter_ble/tree/e7429c445193724fbcd5836f52b7a9f05fac7ed1/lib/devices_list
-  Future initBlue() async {
-    await _bleManager
-        .createClient(
-            restoreStateIdentifier: "example-restore-state-identifier",
-            restoreStateAction: (peripherals) {
-              peripherals?.forEach((peripheral) {
-                _log.info("Restored peripheral: ${peripheral.name}");
-              });
-            })
-        .catchError((e) => _log.severe("创建蓝牙client失败"))
-        .then((_) => _checkPermissions())
-        .catchError((e) => _log.severe("蓝牙开启失败"))
-        .then((_) => _waitForBluetoothPoweredOn());
-
-    BotToast.showText(text: "插件初始化完成");
-  }
-
-  Future destroyBlue() async {
-    await peri.disconnectOrCancelConnection();
-    await _bleManager.destroyClient(); //remember to release native resources when you're done!
-  }
+  BlueUtils _blueUtils = BlueUtils(DeviceRepository(), BleManager());
 
   @override
   void initState() {
@@ -183,10 +30,11 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
 
   @override
   void dispose() {
-    destroyBlue();
-    _bleManager.stopPeripheralScan();
-    _scanSubscription?.cancel();
-    _devicePickerController.close();
+    _blueUtils.dispose();
+    _blueUtils.destroyBlue();
+    // _blueUtils.bleManager.stopPeripheralScan();
+    // _scanSubscription?.cancel();
+    // _devicePickerController.close();
     super.dispose();
   }
 
@@ -200,7 +48,7 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
             child: FlatButton(
               child: Text("初始化"),
               onPressed: () async {
-                await initBlue();
+                _blueUtils.init();
               },
             ),
           ),
@@ -210,7 +58,12 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
             children: <Widget>[
               FlatButton(
                 child: Text("开始扫描"),
-                onPressed: _startScan,
+                onPressed: () {
+                  _blueUtils.startScan();
+                  setState(() {
+                    _beginScan = true;
+                  });
+                },
               ),
               _beginScan
                   ? SizedBox(
@@ -231,8 +84,7 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
                 setState(() {
                   _beginScan = false;
                 });
-                await _bleManager.stopPeripheralScan();
-                BotToast.showText(text: "停止扫描");
+                await _blueUtils.bleManager.stopPeripheralScan();
               },
             ),
           ),
@@ -240,18 +92,17 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
             child: FlatButton(
               child: Text("断开连接"),
               onPressed: () async {
-                await _bleManager.destroyClient();
-                BotToast.showText(text: "断开连接");
+                await _blueUtils.bleManager.destroyClient();
               },
             ),
           ),
           Expanded(
             child: StreamBuilder<List<BleDevice>>(
-              initialData: visibleDevices.value,
-              stream: visibleDevices,
+              initialData: _blueUtils.visibleDevices.value,
+              stream: _blueUtils.visibleDevices,
               builder: (context, snapshot) => RefreshIndicator(
-                onRefresh: refresh,
-                child: DevicesList(_devicePickerController, snapshot.data),
+                onRefresh: _blueUtils.refresh,
+                child: DevicesList(_blueUtils.devicePickerController, snapshot.data),
               ),
             ),
           ),
