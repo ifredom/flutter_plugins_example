@@ -1,40 +1,34 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_lib/flutter_ble_lib.dart';
-import 'package:logging/logging.dart';
-import 'package:flutter_plugins_example/ui/views/flutter_ble_lib/bluelib/ble_devices.dart';
-import 'package:flutter_plugins_example/ui/views/flutter_ble_lib/bluelib/blue_utils.dart';
-import 'package:flutter_plugins_example/ui/views/flutter_ble_lib/bluelib/device_repository.dart';
+import './bluelib/ble_devices.dart';
+import './bluelib/blue_utils.dart';
+import './bluelib/device_repository.dart';
 import 'package:flutter_plugins_example/ui/widgets/appbar/custom_appbar.dart';
 
 typedef DeviceTapListener = void Function();
 
 // 可以扫描
-class FlutterBleLibView extends StatefulWidget {
+class BluelibPage extends StatefulWidget {
   @override
-  _FlutterBleLibViewState createState() => _FlutterBleLibViewState();
+  _BluelibPageState createState() => _BluelibPageState();
 }
 
-class _FlutterBleLibViewState extends State<FlutterBleLibView> {
-  final _log = Logger('FlutterBleLibView');
+class _BluelibPageState extends State<BluelibPage> {
+  BlueUtils _blueUtils = new BlueUtils(DeviceRepository(), BleManager());
 
-  bool _beginScan = false;
-
-  BlueUtils _blueUtils = BlueUtils(DeviceRepository(), BleManager());
+  final List<BleDevice> bleDevices = <BleDevice>[];
 
   @override
   void initState() {
     super.initState();
-    // initBlue();
+    _blueUtils.init();
   }
 
   @override
   void dispose() {
     _blueUtils.dispose();
-    _blueUtils.destroyBlue();
-    // _blueUtils.bleManager.stopPeripheralScan();
-    // _scanSubscription?.cancel();
-    // _devicePickerController.close();
     super.dispose();
   }
 
@@ -45,14 +39,6 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
         appBar: CustomAppbar(title: "蓝牙测试 flutter_ble_lib"),
         body: Column(children: <Widget>[
           Center(
-            child: FlatButton(
-              child: Text("初始化"),
-              onPressed: () async {
-                _blueUtils.init();
-              },
-            ),
-          ),
-          Center(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -60,31 +46,34 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
                 child: Text("开始扫描"),
                 onPressed: () {
                   _blueUtils.startScan();
-                  setState(() {
-                    _beginScan = true;
-                  });
                 },
               ),
-              _beginScan
-                  ? SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.grey[200],
-                        valueColor: AlwaysStoppedAnimation(Colors.blue),
-                      ),
-                    )
-                  : SizedBox(),
+              StreamBuilder(
+                  initialData: _blueUtils.scanning.value,
+                  stream: _blueUtils.scanning.stream,
+                  builder: (context, snap) {
+                    Widget result = SizedBox();
+                    if (snap.data != null) {
+                      result = snap.data
+                          ? SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.grey[200],
+                                valueColor: AlwaysStoppedAnimation(Colors.blue),
+                              ),
+                            )
+                          : SizedBox();
+                    }
+                    return result;
+                  })
             ],
           )),
           Center(
             child: FlatButton(
               child: Text("停止扫描"),
               onPressed: () async {
-                setState(() {
-                  _beginScan = false;
-                });
-                await _blueUtils.bleManager.stopPeripheralScan();
+                await _blueUtils.stopPeripheralScan();
               },
             ),
           ),
@@ -92,7 +81,7 @@ class _FlutterBleLibViewState extends State<FlutterBleLibView> {
             child: FlatButton(
               child: Text("断开连接"),
               onPressed: () async {
-                await _blueUtils.bleManager.destroyClient();
+                _blueUtils.disconnect();
               },
             ),
           ),
