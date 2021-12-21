@@ -63,10 +63,10 @@ class SoundPlayer {
   }
 
   Future<void> play({
-    required String remoteFilePath,
+    required String fromURI,
   }) async {
     await _flutterSoundPlayer?.startPlayer(
-      fromURI: remoteFilePath,
+      fromURI: fromURI,
       codec: Codec.aacMP4,
       whenFinished: onFinished,
     );
