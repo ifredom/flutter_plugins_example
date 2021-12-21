@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_plugins_example/core/app/app.locator.dart';
+import 'package:flutter_plugins_example/core/app/app.router.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -8,6 +11,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final navigationService = locator<NavigationService>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +28,13 @@ class _LoginViewState extends State<LoginView> {
                 icon: Icon(Icons.bluetooth),
                 label: Text("Bluetooth"),
                 onPressed: () {},
+              ),
+              OutlinedButton.icon(
+                icon: Icon(Icons.record_voice_over_rounded),
+                label: Text("SoundRecord"),
+                onPressed: () {
+                  navigationService.navigateTo(Routes.soundRecordScreen);
+                },
               ),
               Icon(Icons.ac_unit),
               Icon(Icons.airport_shuttle),

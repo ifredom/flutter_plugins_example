@@ -6,9 +6,11 @@ import 'package:flutter_plugins_example/core/services/hardware_info_service.dart
 import 'package:flutter_plugins_example/core/services/local_storage_service.dart';
 import 'package:flutter_plugins_example/core/services/share_service.dart';
 import 'package:flutter_plugins_example/core/services/url_service.dart';
+import 'package:flutter_plugins_example/ui/views/bluetooth/bluetooth.dart';
 import 'package:flutter_plugins_example/ui/views/home/home_view/home.dart';
 import 'package:flutter_plugins_example/ui/views/login/login_view.dart';
 import 'package:flutter_plugins_example/ui/views/register/register_view.dart';
+import 'package:flutter_plugins_example/ui/views/soundRecord/soundRecord.dart';
 import 'package:flutter_plugins_example/ui/views/start_up/start_up_view.dart';
 import 'package:flutter_plugins_example/ui/views/update/update_view.dart';
 
@@ -25,6 +27,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: UpdateView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: RegisterView),
+    MaterialRoute(page: SoundRecordScreen),
+    MaterialRoute(page: BluetoothScreen),
   ],
   dependencies: [
     // Lazy singletons
