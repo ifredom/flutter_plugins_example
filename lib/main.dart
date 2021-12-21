@@ -1,47 +1,50 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'core/Constants/Constants.dart';
-import 'services/locator.dart';
-import 'ui/platform/error_page.dart';
-import 'ui/platform/root_component.dart';
+import 'package:flutter_plugins_example/ui/views/error_page.dart';
+
+import './core/Constants/Constants.dart';
+import 'core/app/app.locator.dart';
+import 'ui/views/root_component.dart';
 
 void main() async {
-  // 初始化 访问二进制文件/初始化插件
   WidgetsFlutterBinding.ensureInitialized();
+
+  // View the that need to be redrawn Widget(查看需要重绘的widget)
+  // debugProfileBuildsEnabled = true;
 
   await runZonedGuarded<Future<void>>(() async {
     ErrorWidget.builder = (FlutterErrorDetails details) {
-      Zone.current.handleUncaughtError(details.exception, details.stack);
+      if (Constants.DEBUG) {
+        FlutterError.dumpErrorToConsole(details);
+      } else {
+        Zone.current.handleUncaughtError(details.exception, details.stack as StackTrace);
+      }
       return ErrorPage(details);
     };
 
-    // 启动日志
-    setupLogger();
-
-    /// 启动GetIt定位服务
+    /// Start getit location service(启动GetIt定位服务)
     await setupLocator();
 
-    // 设置全屏
-    await SystemChrome.setEnabledSystemUIOverlays([]);
+    // Set full screen (设置全屏)
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      // SystemUiOverlay.top,
+      // SystemUiOverlay.bottom,
+    ]);
 
-    // 强制横屏
+    /// root Widget
     runApp(RootComponent());
   }, (Object error, StackTrace stackTrace) async {
-    // Zone中未捕获异常处理回调
     await _reportError(error, stackTrace);
   });
 }
 
-void setupLogger() {}
-
-/// Reports [error] along with its [stackTrace] to server.
-// https://github.com/flutter/crashy/blob/master/lib/main.dart
+// Upload application exception information to the server!(上传应用异常信息到日志服务器！)
 Future<Null> _reportError(dynamic error, dynamic stackTrace) async {
-  print('异常捕获: $error');
   if (Constants.DEBUG) {
-    print('异常处理: 开发模式, 不收集错误，不发送到服务端. $stackTrace');
+    print('Development mode, do not send exceptions to the server. $stackTrace');
     return;
   }
-  print('发送异常信息到服务器 ...');
+  print('Send exception information to the server ...');
 }

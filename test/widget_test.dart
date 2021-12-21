@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/ui/platform/root_component.dart';
+import 'package:flutter_plugins_example/ui/views/root_component.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

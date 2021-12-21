@@ -1,17 +1,12 @@
 # flutter_plugins_example
 
-演示: ble，webview, map，chart, websocket ......等第三方插件功能.
+示例: ble，webview, map，chart, websocket ......等第三方插件功能.
 
-copy file & use ！
-
-环境：
-flutter version: 1.22.1
-android sdk: 28
+> 环境： flutter version: 2.5.0
 
 ## 功能插件列表
 
 - flutter_blue: 蓝牙 （√）
-- flutter_ble_lib: 蓝牙
 - flutter_webview: webview
 - flutter_webview_plugin: webview
 - permission_handler: 权限 （√）
@@ -20,9 +15,9 @@ android sdk: 28
 ## 启动运行
 
 ```java
-// 开发，运行
+// run dev
 flutter run
-// 打包apk
+// build apk
 flutter build apk
 // 启动指定入口文件
 flutter run --target lib/pages/websocket/socketpage.dart
@@ -72,25 +67,3 @@ Ctrl + . 快速将`StatelessWidget`转变为`StatefulWidget`。点击`StatelessW
 > flutter packages pub run build_runner build --delete-conflicting-outputs
 
 对预设模板得[要求](https://www.stacksecrets.com/flutter/how-to-use-built_value-library)
-
-同时加入 serializers.dart 文件中
-
-```dash
-
-import 'package:built_value/built_value.dart';
-
-part 'testmode.g.dart';
-
-abstract class Testmode implements Built<Testmode, TestmodeBuilder> {
-  @nullable
-  String get id;
-
-  @nullable
-  String get token;
-
-  String get name;
-
-  Testmode._();
-  factory Testmode([updates(TestmodeBuilder b)]) = _$Testmode;
-}
-```

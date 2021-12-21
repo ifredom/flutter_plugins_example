@@ -3,7 +3,7 @@
   "confirm-dialog-title": "提示",
   "home-view-title": "首页",
   "home-view-no-posts": "没有更多数据",
-  "settings-view-title": "Settings",
+  "settings-view-title": "she'hi",
   "settings-view-permissions": "Permissions",
   "settings-view-permissions-desc": "Open App Permissions",
   "settings-view-app-settings": "App Settings",
@@ -28,5 +28,5 @@
   "password-short": "密码不能少于6位数",
   "snackbar-message": "SnackBar 通知",
   "snackbar-action": "SnackBar 操作",
-  "invalid-postal-idcard": "身份证号码不正确",
+  "invalid-postal-idcard": "身份证号码不正确"
 }
