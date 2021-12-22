@@ -46,6 +46,7 @@ dependencies:
   built_collection: ^5.1.0
   # 蓝牙插件
   flutter_blue: 0.8.0
+  flutter_reactive_ble: 5.0.2
   # video 视频
   fijkplayer: 0.10.1
   # qr code scan  二维码扫描
@@ -100,6 +101,7 @@ dev_dependencies:
   dart_code_metrics: ^4.8.1
   logger: ^1.1.0
   screenshot: ^1.2.3
+  dependency_validator: ^3.0.0
 
 flutter:
   # the material Icons class.

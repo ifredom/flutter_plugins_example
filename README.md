@@ -21,42 +21,10 @@ flutter run
 flutter build apk
 // 启动指定入口文件
 flutter run --target lib/pages/websocket/socketpage.dart
+
+// 检查依赖
+flutter pub run dependency_validator
 ```
-
-## android 环境修改
-
-android compileSdkVersion: 28
-
-app/build.gradle 中的 compileSdkVersion 以及 minSdkVersion
-
-```java
-android {
-    compileSdkVersion 28
-
-    defaultConfig {
-      minSdkVersion 28
-    }
-}
-...
-```
-
----
-
-AndroidManifest.xml
-
-```java
-<application android:usesCleartextTraffic="true"
- ...>
-```
-
-### 开发常用的快捷键
-
-Ctrl + Space 给出代码提示
-Alt + Shift + O 移除没用的 imports
-Ctrl + . 快速包裹小部件。例如`Wrap with Container`，点击任意 widget，例如`Scaffold`,按下 `ctrl+.`
-Ctrl + . 快速将`StatelessWidget`转变为`StatefulWidget`。点击`StatelessWidget`,按下 `ctrl+.`
-右键 + 点击 提取本地变量（Extract Local Variable
-右键 + 点击 提取为类（Extract Widget）
 
 ## built_valut 自动生成代码方法
 

@@ -27,7 +27,9 @@ class _LoginViewState extends State<LoginView> {
               OutlinedButton.icon(
                 icon: Icon(Icons.bluetooth),
                 label: Text("Bluetooth"),
-                onPressed: () {},
+                onPressed: () {
+                  navigationService.navigateTo(Routes.bluetoothScreen);
+                },
               ),
               OutlinedButton.icon(
                 icon: Icon(Icons.record_voice_over_rounded),
