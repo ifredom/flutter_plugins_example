@@ -17,6 +17,8 @@ class _SoundRecordScreenState extends State<SoundRecordScreen> {
   SoundPlayer? _soundPlayer;
   SoundPlayer? get soundPlayer => _soundPlayer;
 
+  bool isRecording = false;
+
   bool isPlaying = false;
 
   initSoundRecord() async {
@@ -55,16 +57,24 @@ class _SoundRecordScreenState extends State<SoundRecordScreen> {
       body: Container(
         child: Column(
           children: [
-            OutlinedButton(
-              child: Text("start record"),
+            OutlinedButton.icon(
+              icon: Icon(isRecording ? Icons.fiber_smart_record_outlined : Icons.fiber_manual_record_outlined),
+              label: Text("start"),
               onPressed: () {
                 _soundRecorder?.startRecording();
+
+                setState(() {
+                  isRecording = true;
+                });
               },
             ),
             OutlinedButton(
               child: Text("stop record"),
               onPressed: () {
                 _soundRecorder?.stopRecording();
+                setState(() {
+                  isRecording = false;
+                });
               },
             ),
             Text("saveTo: ${_soundRecorder?.pathToSaveAudio}"),
@@ -83,7 +93,7 @@ class _SoundRecordScreenState extends State<SoundRecordScreen> {
               },
             ),
             OutlinedButton(
-              child: Text("resume/pause play"),
+              child: Text(isPlaying ? "pause" : "resume"),
               onPressed: () {
                 isPlaying = !isPlaying;
                 if (isPlaying) {
