@@ -43,6 +43,8 @@ dependencies:
   freezed_annotation: 1.1.0
   built_value: ^8.1.0
   built_collection: ^5.1.0
+  # qrcode(二维码)
+  qr_code_scanner: 0.6.1
   # 蓝牙插件
   flutter_blue: 0.8.0
   # flutter_reactive_ble: 5.0.2

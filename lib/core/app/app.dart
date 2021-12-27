@@ -9,10 +9,13 @@ import 'package:pluginexample/core/services/url_service.dart';
 import 'package:pluginexample/ui/views/bluetooth/bluetooth.dart';
 import 'package:pluginexample/ui/views/home/home_view/home.dart';
 import 'package:pluginexample/ui/views/login/login_view.dart';
+import 'package:pluginexample/ui/views/qrcode/qrcode.dart';
 import 'package:pluginexample/ui/views/register/register_view.dart';
+import 'package:pluginexample/ui/views/screenshot/screenshot.dart';
 import 'package:pluginexample/ui/views/soundRecord/soundRecord.dart';
 import 'package:pluginexample/ui/views/start_up/start_up_view.dart';
 import 'package:pluginexample/ui/views/update/update_view.dart';
+import 'package:pluginexample/ui/views/webview/webview.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -29,6 +32,9 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: RegisterView),
     MaterialRoute(page: SoundRecordScreen),
     MaterialRoute(page: BluetoothScreen),
+    MaterialRoute(page: ScreenshotScreen),
+    MaterialRoute(page: QrCodeScreen),
+    MaterialRoute(page: WebviewScreen),
   ],
   dependencies: [
     // Lazy singletons

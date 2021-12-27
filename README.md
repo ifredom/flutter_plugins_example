@@ -6,11 +6,14 @@
 
 ## 功能插件列表
 
-- flutter_blue: 蓝牙 （√）
-- flutter_webview: webview
-- flutter_webview_plugin: webview
+- flutter_sound: 录音/播放录音文件 （√）
 - permission_handler: 权限 （√）
-- screen_shot: 截图 & 二维码（√）
+- webview_flutter: webview （√）
+- screenshot: 截图 （√）
+- qr_code_scanner: 二维码（√）
+- flutter_reactive_ble: 蓝牙 （）
+- map: 地图 （）
+- mqtt: 消息通知（）
 
 ## 启动运行
 

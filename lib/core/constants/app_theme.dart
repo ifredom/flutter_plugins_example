@@ -22,7 +22,7 @@ class AppTheme {
 
   static const Color background = Color(0xFFF2F3F8);
   static const Color scaffoldBackgroundColor = Color(0xFFEDF0F2); // 整体的scaffold背景颜色
-  static const Color iconColor = Color(0xFF6015459);
+  static const Color iconColor = Color(0xFF2633C5);
   static const Color primaryIconColor = Color(0xFFEDF0F2); // 导航栏按钮颜色
 
   static const Color nearlyDarkBlue = Color(0xFF2633C5);

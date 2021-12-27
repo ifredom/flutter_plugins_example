@@ -2,7 +2,7 @@
 
 蓝牙无可用库
 
-- flutter_reactive_ble: 5.0.2 （c）
+- flutter_reactive_ble: 5.0.2 （?）
 - flutter_ble_lib 2.3.2 （已被收购，暂无更新维护计划）
 - flutter_blue: ^0.8.0 (已废弃)
 

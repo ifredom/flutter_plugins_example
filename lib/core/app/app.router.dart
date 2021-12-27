@@ -13,10 +13,13 @@ import 'package:stacked/stacked_annotations.dart';
 import '../../ui/views/bluetooth/bluetooth.dart';
 import '../../ui/views/home/home_view/home.dart';
 import '../../ui/views/login/login_view.dart';
+import '../../ui/views/qrcode/qrcode.dart';
 import '../../ui/views/register/register_view.dart';
+import '../../ui/views/screenshot/screenshot.dart';
 import '../../ui/views/soundRecord/soundRecord.dart';
 import '../../ui/views/start_up/start_up_view.dart';
 import '../../ui/views/update/update_view.dart';
+import '../../ui/views/webview/webview.dart';
 
 class Routes {
   static const String startUpView = '/';
@@ -26,6 +29,9 @@ class Routes {
   static const String registerView = '/register-view';
   static const String soundRecordScreen = '/sound-record-screen';
   static const String bluetoothScreen = '/bluetooth-screen';
+  static const String screenshotScreen = '/screenshot-screen';
+  static const String qrCodeScreen = '/qr-code-screen';
+  static const String webviewScreen = '/webview-screen';
   static const all = <String>{
     startUpView,
     homeView,
@@ -34,6 +40,9 @@ class Routes {
     registerView,
     soundRecordScreen,
     bluetoothScreen,
+    screenshotScreen,
+    qrCodeScreen,
+    webviewScreen,
   };
 }
 
@@ -48,6 +57,9 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.registerView, page: RegisterView),
     RouteDef(Routes.soundRecordScreen, page: SoundRecordScreen),
     RouteDef(Routes.bluetoothScreen, page: BluetoothScreen),
+    RouteDef(Routes.screenshotScreen, page: ScreenshotScreen),
+    RouteDef(Routes.qrCodeScreen, page: QrCodeScreen),
+    RouteDef(Routes.webviewScreen, page: WebviewScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -91,6 +103,24 @@ class StackedRouter extends RouterBase {
     BluetoothScreen: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const BluetoothScreen(),
+        settings: data,
+      );
+    },
+    ScreenshotScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ScreenshotScreen(),
+        settings: data,
+      );
+    },
+    QrCodeScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const QrCodeScreen(),
+        settings: data,
+      );
+    },
+    WebviewScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const WebviewScreen(),
         settings: data,
       );
     },

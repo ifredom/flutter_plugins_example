@@ -25,17 +25,24 @@ class _LoginViewState extends State<LoginView> {
             ),
             children: <Widget>[
               OutlinedButton.icon(
-                icon: const Icon(Icons.bluetooth),
-                label: const Text("Bluetooth"),
-                onPressed: () {
-                  navigationService.navigateTo(Routes.bluetoothScreen);
-                },
-              ),
-              OutlinedButton.icon(
                 icon: const Icon(Icons.record_voice_over_rounded),
                 label: const Text("SoundRecord"),
                 onPressed: () {
                   navigationService.navigateTo(Routes.soundRecordScreen);
+                },
+              ),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.qr_code),
+                label: const Text("qrCode"),
+                onPressed: () {
+                  navigationService.navigateTo(Routes.qrCodeScreen);
+                },
+              ),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.bluetooth),
+                label: const Text("Bluetooth"),
+                onPressed: () {
+                  navigationService.navigateTo(Routes.bluetoothScreen);
                 },
               ),
               const Icon(Icons.ac_unit),
