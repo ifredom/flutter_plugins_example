@@ -1,4 +1,4 @@
-import 'package:flutter_plugins_example/core/model/app_models.dart';
+import 'package:pluginexample/core/model/app_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OpenLinkService {

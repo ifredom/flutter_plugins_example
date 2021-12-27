@@ -1,5 +1,5 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:flutter_plugins_example/core/app/app.logger.dart';
+import 'package:pluginexample/core/app/app.logger.dart';
 
 class AppSettingsService {
   final _log = getLogger('AppSettingsServiceImpl');

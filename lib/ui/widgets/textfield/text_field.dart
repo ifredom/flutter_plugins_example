@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_plugins_example/core/utils/common/color_utils.dart';
-import 'package:flutter_plugins_example/core/utils/res/gaps.dart';
+import 'package:pluginexample/core/utils/common/color_utils.dart';
+import 'package:pluginexample/core/utils/res/gaps.dart';
 
 typedef ValidatorT = String? Function(String?);
 
@@ -89,7 +89,7 @@ class _CustomTextFieldState extends State<InputField> {
         currentSecond = second;
         _isClick = false;
       });
-      _obs = Stream.periodic(Duration(seconds: 1), (i) => i).take(second).listen((i) {
+      _obs = Stream.periodic(const Duration(seconds: 1), (i) => i).take(second).listen((i) {
         setState(() {
           currentSecond = second - i - 1;
           _isClick = currentSecond < 1;
@@ -178,7 +178,7 @@ class BuildTextfieldWrapper extends StatelessWidget {
   final bool _isClick;
   final Function? getVCodeCallback;
   final String? second;
-  BuildTextfieldWrapper(this.child, this.widget, this._isClick, {this.getVCodeCallback, this.second});
+  const BuildTextfieldWrapper(this.child, this.widget, this._isClick, {this.getVCodeCallback, this.second});
 
   @override
   Widget build(BuildContext context) {
@@ -186,17 +186,17 @@ class BuildTextfieldWrapper extends StatelessWidget {
         ? BoxDecoration(
             border: Border.all(
               width: 1,
-              color: widget.borderColor ?? Color.fromRGBO(217, 217, 217, 1),
+              color: widget.borderColor ?? const Color.fromRGBO(217, 217, 217, 1),
             ),
             borderRadius: widget.roundBoxRadius == 0
                 ? BorderRadius.zero
                 : BorderRadius.all(Radius.circular(widget.roundBoxRadius ?? 32)),
           )
-        : UnderlineTabIndicator(
+        : const UnderlineTabIndicator(
             borderSide: BorderSide(width: 1.0, color: Colors.black),
           );
 
-    EdgeInsetsGeometry _padding = widget.padding ?? EdgeInsets.fromLTRB(16, 0, 16, 0);
+    EdgeInsetsGeometry _padding = widget.padding ?? const EdgeInsets.fromLTRB(16, 0, 16, 0);
 
     return Container(
       padding: _padding,
@@ -205,20 +205,20 @@ class BuildTextfieldWrapper extends StatelessWidget {
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          null == widget.prefixIcon ? Gaps.empty : widget.prefixIcon,
+          widget.prefixIcon ?? Gaps.empty,
           null == widget.prefixIcon ? Gaps.empty : Gaps.hGap10,
           Expanded(
             flex: 80,
             child: child,
           ),
-          null == widget.suffixIcon ? Gaps.empty : widget.suffixIcon,
+          widget.suffixIcon ?? Gaps.empty,
           null == widget.suffixIcon ? Gaps.empty : Gaps.hGap10,
           widget.getVCode == null
               ? Gaps.empty
               : Row(
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     SizedBox(
                       width: 1,
                       height: 24,
@@ -226,7 +226,7 @@ class BuildTextfieldWrapper extends StatelessWidget {
                         color: HexToColor('#767680'),
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     GestureDetector(
                       // padding: EdgeInsets.symmetric(vertical: 0),
                       child: Text(

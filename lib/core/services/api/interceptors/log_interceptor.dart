@@ -7,8 +7,8 @@ import 'package:dio/dio.dart'
         RequestOptions,
         Response,
         ResponseInterceptorHandler;
-import 'package:flutter_plugins_example/core/app/app.logger.dart';
-import 'package:flutter_plugins_example/core/constants/constants.dart';
+import 'package:pluginexample/core/app/app.logger.dart';
+import 'package:pluginexample/core/constants/constants.dart';
 
 bool openDebug = Constants.DEBUG;
 

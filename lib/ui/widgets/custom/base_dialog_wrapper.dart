@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_plugins_example/core/utils/common/color_utils.dart';
-import 'package:flutter_plugins_example/core/utils/res/gaps.dart';
-import 'package:flutter_plugins_example/ui/widgets/buttons/gradient_button.dart';
+import 'package:pluginexample/core/utils/common/color_utils.dart';
+import 'package:pluginexample/core/utils/res/gaps.dart';
+import 'package:pluginexample/ui/widgets/buttons/gradient_button.dart';
 
 class BaseDialogWrapper extends Dialog {
+  @override
   final Widget child;
   final String title;
   final double? height;
@@ -16,7 +17,7 @@ class BaseDialogWrapper extends Dialog {
   final String deniedButtonText;
   final String confirmedButtonText;
 
-  BaseDialogWrapper({
+  const BaseDialogWrapper({
     Key? key,
     required this.child,
     this.title = '提示',
@@ -43,7 +44,7 @@ class BaseDialogWrapper extends Dialog {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-              color: Color.fromRGBO(0, 0, 0, 0.2),
+              color: const Color.fromRGBO(0, 0, 0, 0.2),
               width: 5,
             ),
             borderRadius: BorderRadius.circular(20),
@@ -59,8 +60,8 @@ class BaseDialogWrapper extends Dialog {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              BuildTopAreaWidget(title: this.title, showCloseButton: showClose, onClosed: this.onClosed!),
-              Expanded(flex: 1, child: this.child),
+              BuildTopAreaWidget(title: title, showCloseButton: showClose, onClosed: onClosed!),
+              Expanded(flex: 1, child: child),
               BuildActionsButton(
                 onDenied: onDenied,
                 onConfirmed: onConfirmed,
@@ -79,10 +80,10 @@ class BuildTopAreaWidget extends StatelessWidget {
   final String title;
   final bool showCloseButton;
   final Function? onClosed;
-  BuildTopAreaWidget({this.title = '提示', this.showCloseButton = true, this.onClosed});
+  const BuildTopAreaWidget({this.title = '提示', this.showCloseButton = true, this.onClosed});
   @override
   Widget build(BuildContext context) {
-    Widget buildTitle = Container(
+    Widget buildTitle = SizedBox(
       width: double.infinity,
       child: Center(
         child: Text(
@@ -118,10 +119,10 @@ class BuildTopAreaWidget extends StatelessWidget {
           )
         : Gaps.empty;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       decoration: BoxDecoration(
         color: HexToColor('#F7F2FF'),
-        borderRadius: BorderRadius.vertical(top: Radius.elliptical(16, 16)),
+        borderRadius: const BorderRadius.vertical(top: Radius.elliptical(16, 16)),
       ),
       child: Stack(
         alignment: Alignment.topCenter,
@@ -137,7 +138,7 @@ class BuildActionsButton extends StatelessWidget {
   final String deniedButtonText;
   final String confirmedButtonText;
 
-  BuildActionsButton(
+  const BuildActionsButton(
       {Key? key, this.onDenied, this.onConfirmed, this.deniedButtonText = '取消', this.confirmedButtonText = '确认'})
       : super(key: key);
   @override
@@ -145,7 +146,7 @@ class BuildActionsButton extends StatelessWidget {
     Widget buttonWidget;
     if (onDenied != null && onConfirmed != null) {
       buttonWidget = Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -174,7 +175,7 @@ class BuildActionsButton extends StatelessWidget {
     } else if (onDenied != null && onConfirmed == null) {
       buttonWidget = Center(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: GradientButton(
             colors: [HexToColor('#C7B8E6')],
             text: deniedButtonText,
@@ -189,7 +190,7 @@ class BuildActionsButton extends StatelessWidget {
     } else if (onDenied == null && onConfirmed != null) {
       buttonWidget = Center(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: GradientButton(
             text: confirmedButtonText,
             colors: [HexToColor('#FF696A'), HexToColor('#FF894A')],

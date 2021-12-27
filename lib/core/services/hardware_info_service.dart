@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter_plugins_example/core/app/app.logger.dart';
+import 'package:pluginexample/core/app/app.logger.dart';
 
 /// Service that is responsible for getting hardware device info
 class HardwareInfoService {

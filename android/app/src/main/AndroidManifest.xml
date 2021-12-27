@@ -1,44 +1,42 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.flutter_plugins_example">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.pluginexample">
+    <application android:label="pluginexample" android:name="${applicationName}" android:icon="@mipmap/ic_launcher">
+        <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
 
-  <application android:usesCleartextTraffic="true" android:name="io.flutter.app.FlutterApplication" android:label="flutter_plugins_example" android:icon="@mipmap/ic_launcher">
-    <activity android:name=".MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
+            <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
-      <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
+        <meta-data android:name="flutterEmbedding" android:value="2" />
+    </application>
 
-      <meta-data android:name="io.flutter.embedding.android.SplashScreenDrawable" android:resource="@drawable/launch_background" />
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
 
-    <meta-data android:name="flutterEmbedding" android:value="2" />
-  </application>
-
-  <!-- 相机权限 -->
-  <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-  <!-- 用于读取手机当前的状态-->
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-  <!-- 网络权限 -->
-  <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-  <!-- 使用蓝牙设备的权限 -->
-  <uses-permission android:name="android.permission.BLUETOOTH" />
-  <!-- 管理蓝牙设备的权限 -->
-  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-  <!-- 这个权限用于进行网络定位-->
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-  <!-- 这个权限用于访问GPS定位-->
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-  <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-  <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-  <!-- 读取系统信息，包含系统版本等信息，用作统计-->
-  <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"></uses-permission>
-  <!-- 音频播放记录-->
-  <uses-permission android:name="android.permission.RECORD_AUDIO" />
-  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- 相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!-- 使用蓝牙设备的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- 管理蓝牙设备的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!-- 读取系统信息，包含系统版本等信息，用作统计-->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"></uses-permission>
+    <!-- 音频播放记录-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 </manifest>

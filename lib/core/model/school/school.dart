@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter_plugins_example/core/model/school/teacher.dart';
+import 'package:pluginexample/core/model/school/teacher.dart';
 
 import '../serializers.dart';
 

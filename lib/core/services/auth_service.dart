@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:flutter_plugins_example/core/app/app.logger.dart';
-import 'package:flutter_plugins_example/core/app/app.locator.dart';
-import 'package:flutter_plugins_example/core/model/userinfo/user.dart';
-import 'package:flutter_plugins_example/core/services/api/apicode/api.dart';
-import 'package:flutter_plugins_example/core/services/api/http_service_impl.dart';
-import 'package:flutter_plugins_example/core/services/local_storage_service.dart';
+import 'package:pluginexample/core/app/app.logger.dart';
+import 'package:pluginexample/core/app/app.locator.dart';
+import 'package:pluginexample/core/model/userinfo/user.dart';
+import 'package:pluginexample/core/services/api/apicode/api.dart';
+import 'package:pluginexample/core/services/api/http_service_impl.dart';
+import 'package:pluginexample/core/services/local_storage_service.dart';
 
-import 'package:flutter_plugins_example/core/utils/res/local_storage_keys.dart';
+import 'package:pluginexample/core/utils/res/local_storage_keys.dart';
 
 // 定义异步接口请求
 class AuthService {

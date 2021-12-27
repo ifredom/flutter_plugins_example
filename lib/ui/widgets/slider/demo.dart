@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/utils/common/color_utils.dart';
+import 'package:pluginexample/core/utils/common/color_utils.dart';
 
 import 'base_slider.dart';
 
@@ -23,27 +23,27 @@ class _SliderDemoState extends State<SliderDemo> {
       data: SliderTheme.of(context).copyWith(
         activeTrackColor: HexToColor('#BFF184'), //进度条滑块左边颜色
         inactiveTrackColor: HexToColor('#BFF184'), //进度条滑块右边颜色
-        trackShape: RoundSliderTrackShape(radius: 10), //进度条形状,这边自定义两头显示圆角
+        trackShape: const RoundSliderTrackShape(radius: 10), //进度条形状,这边自定义两头显示圆角
         thumbColor: Colors.yellow, //滑块颜色
         overlayColor: Colors.green, //滑块拖拽时外圈的颜色
-        overlayShape: RoundSliderOverlayShape(
+        overlayShape: const RoundSliderOverlayShape(
           //可继承SliderComponentShape自定义形状
           overlayRadius: 15, //滑块外圈大小
         ),
-        thumbShape: RoundSliderThumbShape(
+        thumbShape: const RoundSliderThumbShape(
           //可继承SliderComponentShape自定义形状
           disabledThumbRadius: 15, //禁用是滑块大小
           enabledThumbRadius: 10, //滑块大小
         ),
         inactiveTickMarkColor: Colors.black,
-        tickMarkShape: RoundSliderTickMarkShape(
+        tickMarkShape: const RoundSliderTickMarkShape(
           //继承SliderTickMarkShape可自定义刻度形状
           tickMarkRadius: 4.0, //刻度大小
         ),
         showValueIndicator: ShowValueIndicator.onlyForDiscrete, //气泡显示的形式
         valueIndicatorColor: Colors.red, //气泡颜色
-        valueIndicatorShape: PaddleSliderValueIndicatorShape(), //气泡形状
-        valueIndicatorTextStyle: TextStyle(color: Colors.black), //气泡里值的风格
+        valueIndicatorShape: const PaddleSliderValueIndicatorShape(), //气泡形状
+        valueIndicatorTextStyle: const TextStyle(color: Colors.black), //气泡里值的风格
         trackHeight: 15, //进度条宽度
       ),
       child: Slider(

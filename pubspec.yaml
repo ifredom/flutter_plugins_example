@@ -1,12 +1,11 @@
-name: flutter_plugins_example
-description: A new Flutter plugins example
+name: pluginexample
+description: A new Flutter project.
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
-
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -47,6 +46,7 @@ dependencies:
   # 蓝牙插件
   flutter_blue: 0.8.0
   # flutter_reactive_ble: 5.0.2
+  # flutter_ble_lib: 2.3.2
   # video 视频
   fijkplayer: 0.10.1
   # qr code scan  二维码扫描

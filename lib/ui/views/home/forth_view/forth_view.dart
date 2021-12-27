@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/constants/app_theme.dart';
+import 'package:pluginexample/core/constants/app_theme.dart';
 
 class ForthScreen extends StatefulWidget {
   @override
@@ -14,8 +14,8 @@ class _ForthScreenState extends State<ForthScreen> with TickerProviderStateMixin
       child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
-            color: Color.fromRGBO(124, 124, 124, 0.8),
-            child: Center(
+            color: const Color.fromRGBO(124, 124, 124, 0.8),
+            child: const Center(
               child: Text("Me"),
             ),
           )),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/constants/app_theme.dart';
-import 'package:flutter_plugins_example/core/constants/tab_icon_data.dart';
-import 'package:flutter_plugins_example/core/utils/common/color_utils.dart';
+import 'package:pluginexample/core/constants/app_theme.dart';
+import 'package:pluginexample/core/constants/tab_icon_data.dart';
+import 'package:pluginexample/core/utils/common/color_utils.dart';
 
 class BottomBarView extends StatefulWidget {
   const BottomBarView({Key? key, required this.tabIconsList, required this.changeIndex, required this.addClick})
@@ -127,7 +127,7 @@ class _BottomBarViewState extends State<BottomBarView> with SingleTickerProvider
                           onTap: () {
                             widget.addClick();
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.add,
                             color: AppTheme.white,
                             size: 32,
@@ -148,12 +148,12 @@ class _BottomBarViewState extends State<BottomBarView> with SingleTickerProvider
   void setRemoveAllSelection(TabIconData tabIconData) {
     if (!mounted) return;
     setState(() {
-      widget.tabIconsList.forEach((TabIconData tab) {
+      for (var tab in widget.tabIconsList) {
         tab.isSelected = false;
         if (tabIconData.index == tab.index) {
           tab.isSelected = true;
         }
-      });
+      }
     });
   }
 }
@@ -161,7 +161,7 @@ class _BottomBarViewState extends State<BottomBarView> with SingleTickerProvider
 class TabIcons extends StatefulWidget {
   final TabIconData tabIconData;
   final Function removeAllSelect;
-  TabIcons({Key? key, required this.tabIconData, required this.removeAllSelect}) : super(key: key);
+  const TabIcons({Key? key, required this.tabIconData, required this.removeAllSelect}) : super(key: key);
 
   @override
   _TabIconsState createState() => _TabIconsState();
@@ -210,7 +210,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                   alignment: Alignment.center,
                   scale: Tween<double>(begin: 0.88, end: 1.0).animate(CurvedAnimation(
                       parent: widget.tabIconData.animationController as AnimationController,
-                      curve: Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
+                      curve: const Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
                   child: Image.asset(widget.tabIconData.isSelected
                       ? widget.tabIconData.selectedImagePath
                       : widget.tabIconData.imagePath),
@@ -223,11 +223,11 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                     alignment: Alignment.center,
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
                         parent: widget.tabIconData.animationController as AnimationController,
-                        curve: Interval(0.2, 1.0, curve: Curves.fastOutSlowIn))),
+                        curve: const Interval(0.2, 1.0, curve: Curves.fastOutSlowIn))),
                     child: Container(
                       width: 8,
                       height: 8,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: AppTheme.nearlyDarkBlue,
                         shape: BoxShape.circle,
                       ),
@@ -242,11 +242,11 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                     alignment: Alignment.center,
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
                         parent: widget.tabIconData.animationController as AnimationController,
-                        curve: Interval(0.5, 0.8, curve: Curves.fastOutSlowIn))),
+                        curve: const Interval(0.5, 0.8, curve: Curves.fastOutSlowIn))),
                     child: Container(
                       width: 4,
                       height: 4,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: AppTheme.nearlyDarkBlue,
                         shape: BoxShape.circle,
                       ),
@@ -261,11 +261,11 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                     alignment: Alignment.center,
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
                         parent: widget.tabIconData.animationController as AnimationController,
-                        curve: Interval(0.5, 0.6, curve: Curves.fastOutSlowIn))),
+                        curve: const Interval(0.5, 0.6, curve: Curves.fastOutSlowIn))),
                     child: Container(
                       width: 6,
                       height: 6,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: AppTheme.nearlyDarkBlue,
                         shape: BoxShape.circle,
                       ),

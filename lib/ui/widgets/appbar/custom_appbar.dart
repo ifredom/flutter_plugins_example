@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:flutter_plugins_example/core/app/app.locator.dart';
+import 'package:pluginexample/core/app/app.locator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:stacked_services/stacked_services.dart';
 
-import 'package:flutter_plugins_example/core/utils/common/color_utils.dart';
+import 'package:pluginexample/core/utils/common/color_utils.dart';
 
 enum BackImageMode { light, black }
 
@@ -41,7 +41,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   //默认 _actionW * count 如果超过需要设置
   final double? actionsMaxW;
 
-  CustomAppbar({
+  const CustomAppbar({
     required this.title,
     this.height = 50,
     this.opacity = 1.0,
@@ -62,22 +62,22 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     double _actionsMaxW = 94.0;
-    List<Color> _widgetColors = this.colors ?? [];
+    List<Color> _widgetColors = colors ?? [];
     Color _backgroundColors;
     LinearGradient _linearGradient;
 
     //透明度（0 ～ 1）
-    double _opacity = max(min(this.opacity, 1), 0);
+    double _opacity = max(min(opacity, 1), 0);
 
     // 背景色
     if (_widgetColors.isEmpty) {
       // 默认背景色
       _backgroundColors = HexToColor("#F7F2FF");
-      _linearGradient = LinearGradient(colors: []);
+      _linearGradient = const LinearGradient(colors: []);
     } else if (_widgetColors.length == 1) {
       // 背景单色
       _backgroundColors = _widgetColors[0];
-      _linearGradient = LinearGradient(colors: []);
+      _linearGradient = const LinearGradient(colors: []);
     } else {
       // 背景渐变色
       _backgroundColors = HexToColor("#F7F2FF");
@@ -85,57 +85,53 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     }
 
     // 左侧组件
-    Widget? _frontWidget = this.frontWidget;
+    Widget? _frontWidget = frontWidget;
     if (null == _frontWidget && defaultLeft) {
-      _frontWidget = this.backImageMode == BackImageMode.light
+      _frontWidget = backImageMode == BackImageMode.light
           ? Image.asset(
               "assets/images/back2.png",
               fit: BoxFit.fitHeight,
-              height: this.preferredSize.height,
+              height: preferredSize.height,
             )
           : Image.asset(
               "assets/images/back.png",
               fit: BoxFit.fitHeight,
-              height: this.preferredSize.height,
+              height: preferredSize.height,
             );
     }
 
     //数据处理
     //背景视图
-    Widget? _background = this.background;
-    if (_background == null) {
-      _background = Container(
-        decoration: BoxDecoration(
-          color: _backgroundColors,
-          gradient: _linearGradient,
-        ),
-        child: null,
-      );
-    }
+    Widget? _background = background;
+    _background ??= Container(
+      decoration: BoxDecoration(
+        color: _backgroundColors,
+        gradient: _linearGradient,
+      ),
+      child: null,
+    );
 
     // 中间组件，标题样式
-    TextStyle _textStyle = this.style ??
+    TextStyle _textStyle = style ??
         TextStyle(
           fontSize: 26,
-          color: this.backImageMode == BackImageMode.black ? HexToColor('#ffffff') : HexToColor('#177cb0'),
+          color: backImageMode == BackImageMode.black ? HexToColor('#ffffff') : HexToColor('#177cb0'),
           fontWeight: FontWeight.bold,
         );
     // 中间组件
-    Widget? _middle = this.middle;
-    if (null == _middle) {
-      _middle = Container(
-        alignment: Alignment.center,
-        child: Text(this.title, style: _textStyle),
-      );
-    }
+    Widget? _middle = middle;
+    _middle ??= Container(
+      alignment: Alignment.center,
+      child: Text(this.title, style: _textStyle),
+    );
 
     return Opacity(
       opacity: _opacity,
       child: Stack(
         children: <Widget>[
           // 底部背景
-          Container(
-            height: this.preferredSize.height,
+          SizedBox(
+            height: preferredSize.height,
             child: _background,
           ),
 
@@ -145,7 +141,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 // 左侧视图
-                Container(
+                SizedBox(
                   width: _actionsMaxW,
                   child: GestureDetector(
                     child: SizedBox(width: 32, height: 32, child: _frontWidget),
@@ -161,9 +157,9 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 ),
 
                 // 右侧视图
-                Container(
+                SizedBox(
                   width: _actionsMaxW,
-                  child: (null == this.trailingWidget) ? null : this.trailingWidget,
+                  child: (null == trailingWidget) ? null : trailingWidget,
                 ),
               ],
             ),

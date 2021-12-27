@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/ui/views/home/home_view/home.dart';
+import 'package:pluginexample/ui/views/home/home_view/home.dart';
 
 import 'drawer_user_controller.dart';
 import 'home_drawer.dart';

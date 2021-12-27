@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart' show InterceptorsWrapper, RequestInterceptorHandler, RequestOptions;
-import 'package:flutter_plugins_example/core/app/app.locator.dart';
-import 'package:flutter_plugins_example/core/services/local_storage_service.dart';
+import 'package:pluginexample/core/app/app.locator.dart';
+import 'package:pluginexample/core/services/local_storage_service.dart';
 
-import 'package:flutter_plugins_example/core/utils/res/local_storage_keys.dart';
+import 'package:pluginexample/core/utils/res/local_storage_keys.dart';
 
 const _authHeaderToekn = 'token';
 
@@ -29,14 +29,14 @@ class TokenInterceptors extends InterceptorsWrapper {
     if (token == '') {
       result = StorageKeys.DEFAULT_TOKEN_KEY;
     } else {
-      this._token = token;
+      _token = token;
       result = token;
     }
     return result;
   }
 
   clearAuthorization() {
-    this._token = '';
+    _token = '';
     _localStorageService.remove(StorageKeys.TOKEN_KEY);
   }
 }
