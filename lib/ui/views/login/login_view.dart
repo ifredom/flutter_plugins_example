@@ -39,6 +39,13 @@ class _LoginViewState extends State<LoginView> {
                 },
               ),
               OutlinedButton.icon(
+                icon: const Icon(Icons.audiotrack),
+                label: const Text("justAudio"),
+                onPressed: () {
+                  navigationService.navigateTo(Routes.justAudioScreen);
+                },
+              ),
+              OutlinedButton.icon(
                 icon: const Icon(Icons.bluetooth),
                 label: const Text("Bluetooth"),
                 onPressed: () {

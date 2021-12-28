@@ -7,6 +7,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:pluginexample/ui/views/audio/justaudio.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -32,6 +33,7 @@ class Routes {
   static const String screenshotScreen = '/screenshot-screen';
   static const String qrCodeScreen = '/qr-code-screen';
   static const String webviewScreen = '/webview-screen';
+  static const String justAudioScreen = '/just-audio-screen';
   static const all = <String>{
     startUpView,
     homeView,
@@ -43,6 +45,7 @@ class Routes {
     screenshotScreen,
     qrCodeScreen,
     webviewScreen,
+    justAudioScreen,
   };
 }
 
@@ -60,6 +63,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.screenshotScreen, page: ScreenshotScreen),
     RouteDef(Routes.qrCodeScreen, page: QrCodeScreen),
     RouteDef(Routes.webviewScreen, page: WebviewScreen),
+    RouteDef(Routes.justAudioScreen, page: JustAudioScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -121,6 +125,12 @@ class StackedRouter extends RouterBase {
     WebviewScreen: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const WebviewScreen(),
+        settings: data,
+      );
+    },
+    JustAudioScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const JustAudioScreen(),
         settings: data,
       );
     },

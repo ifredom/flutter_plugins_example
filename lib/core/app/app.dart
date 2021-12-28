@@ -6,6 +6,7 @@ import 'package:pluginexample/core/services/hardware_info_service.dart';
 import 'package:pluginexample/core/services/local_storage_service.dart';
 import 'package:pluginexample/core/services/share_service.dart';
 import 'package:pluginexample/core/services/url_service.dart';
+import 'package:pluginexample/ui/views/audio/Justaudio.dart';
 import 'package:pluginexample/ui/views/bluetooth/bluetooth.dart';
 import 'package:pluginexample/ui/views/home/home_view/home.dart';
 import 'package:pluginexample/ui/views/login/login_view.dart';
@@ -35,6 +36,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: ScreenshotScreen),
     MaterialRoute(page: QrCodeScreen),
     MaterialRoute(page: WebviewScreen),
+    MaterialRoute(page: JustAudioScreen),
   ],
   dependencies: [
     // Lazy singletons
