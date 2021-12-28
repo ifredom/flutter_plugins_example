@@ -8,9 +8,10 @@
 
 - flutter_sound: 录音/播放录音文件 （√）
 - permission_handler: 权限 （√）
+- qr_code_scanner: 二维码（√）
+- just_audio: 音频播放（节拍器）（√）
 - webview_flutter: webview （√）
 - screenshot: 截图 （√）
-- qr_code_scanner: 二维码（√）
 - flutter_reactive_ble: 蓝牙 （）
 - map: 地图 （）
 - mqtt: 消息通知（）
