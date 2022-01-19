@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/app/app.locator.dart';
-import 'package:flutter_plugins_example/core/app/app.logger.dart';
+import 'package:pluginexample/core/app/app.locator.dart';
+import 'package:pluginexample/core/app/app.logger.dart';
 
 import '../services/connectivity_service.dart';
 import '../services/stoppable_service.dart';
@@ -11,6 +11,7 @@ class LifeCycleManager extends StatefulWidget {
 
   const LifeCycleManager({Key? key, required this.child}) : super(key: key);
 
+  @override
   _LifeCycleManagerState createState() => _LifeCycleManagerState();
 }
 
@@ -41,12 +42,12 @@ class _LifeCycleManagerState extends State<LifeCycleManager> with WidgetsBinding
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     _log.i('App life cycle change to $state');
-    servicesToManage.forEach((service) {
+    for (var service in servicesToManage) {
       if (state == AppLifecycleState.resumed) {
         service.start();
       } else {
         service.stop();
       }
-    });
+    }
   }
 }

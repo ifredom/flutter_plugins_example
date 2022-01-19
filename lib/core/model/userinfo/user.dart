@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter_plugins_example/core/model/serializers.dart';
+import 'package:pluginexample/core/model/serializers.dart';
 
 part 'user.g.dart';
 
@@ -39,5 +39,5 @@ abstract class User implements Built<User, UserBuilder> {
 
   User._();
   static Serializer<User> get serializer => _$userSerializer;
-  factory User([updates(UserBuilder b)]) = _$User;
+  factory User([Function(UserBuilder b) updates]) = _$User;
 }

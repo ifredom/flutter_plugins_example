@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/app/app.router.dart';
-import 'package:flutter_plugins_example/core/constants/app_theme.dart';
-import 'package:flutter_plugins_example/core/localization/setup_local.dart';
-import 'package:flutter_plugins_example/core/managers/lifecycle_manager.dart';
+import 'package:pluginexample/core/app/app.router.dart';
+import 'package:pluginexample/core/constants/app_theme.dart';
+import 'package:pluginexample/core/localization/setup_local.dart';
+import 'package:pluginexample/core/managers/lifecycle_manager.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class RootComponent extends StatefulWidget {
+  const RootComponent({Key? key}) : super(key: key);
   @override
   _RootComponentState createState() => _RootComponentState();
 }
@@ -19,7 +20,7 @@ class _RootComponentState extends State<RootComponent> {
         localizationsDelegates: localizationsDelegates,
         localeResolutionCallback: loadSupportedLocals,
         supportedLocales: supportedLocales,
-        locale: Locale('zh', 'CN'),
+        locale: const Locale('zh', 'CN'),
         title: 'flutterApp',
         theme: AppTheme.themData,
         navigatorKey: StackedService.navigatorKey,

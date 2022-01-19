@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/ui/widgets/custom/screen.dart';
+import 'package:pluginexample/ui/widgets/custom/screen.dart';
 
 import 'update_viewmodel.dart';
 
@@ -10,7 +10,7 @@ class UpdateView extends StatelessWidget {
         viewModel: UpdateViewModel(),
         builder: (context, uiHelpers, model) => Scaffold(
               appBar: AppBar(),
-              body: Text("Update View"),
+              body: const Text("Update View"),
             ));
   }
 }

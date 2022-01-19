@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/constants/app_theme.dart';
-import 'package:flutter_plugins_example/ui/views/home/first_view/sliding_cards.dart';
+import 'package:pluginexample/core/constants/app_theme.dart';
+import 'package:pluginexample/ui/views/home/first_view/sliding_cards.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({Key? key, required this.animationController}) : super(key: key);
@@ -46,10 +46,9 @@ class _FirstScreenState extends State<FirstScreen> with TickerProviderStateMixin
   }
 
   void addAllListData() {
-    listViews
-      ..add(
-        SlidingCardsView(),
-      );
+    listViews.add(
+      SlidingCardsView(),
+    );
   }
 
   Future<bool> getData() async {

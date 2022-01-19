@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/app/app.locator.dart';
-import 'package:flutter_plugins_example/core/app/app.router.dart';
+import 'package:pluginexample/core/app/app.locator.dart';
+import 'package:pluginexample/core/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class LoginView extends StatefulWidget {
@@ -17,37 +17,51 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: GridView(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
               childAspectRatio: 1.0,
             ),
             children: <Widget>[
               OutlinedButton.icon(
-                icon: Icon(Icons.bluetooth),
-                label: Text("Bluetooth"),
-                onPressed: () {
-                  navigationService.navigateTo(Routes.bluetoothScreen);
-                },
-              ),
-              OutlinedButton.icon(
-                icon: Icon(Icons.record_voice_over_rounded),
-                label: Text("SoundRecord"),
+                icon: const Icon(Icons.record_voice_over_rounded),
+                label: const Text("SoundRecord"),
                 onPressed: () {
                   navigationService.navigateTo(Routes.soundRecordScreen);
                 },
               ),
-              Icon(Icons.ac_unit),
-              Icon(Icons.airport_shuttle),
-              Icon(Icons.all_inclusive),
-              Icon(Icons.beach_access),
-              Icon(Icons.cake),
               OutlinedButton.icon(
-                icon: Icon(Icons.home),
-                label: Text("home"),
+                icon: const Icon(Icons.qr_code),
+                label: const Text("qrCode"),
                 onPressed: () {
-                  navigationService.navigateTo(Routes.homeView);
+                  navigationService.navigateTo(Routes.qrCodeScreen);
+                },
+              ),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.audiotrack),
+                label: const Text("justAudio"),
+                onPressed: () {
+                  navigationService.navigateTo(Routes.justAudioScreen);
+                },
+              ),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.bluetooth),
+                label: const Text("Bluetooth"),
+                onPressed: () {
+                  navigationService.navigateTo(Routes.bluetoothScreen);
+                },
+              ),
+              const Icon(Icons.ac_unit),
+              const Icon(Icons.airport_shuttle),
+              const Icon(Icons.all_inclusive),
+              const Icon(Icons.beach_access),
+              const Icon(Icons.cake),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.home),
+                label: const Text("home"),
+                onPressed: () {
+                  // navigationService.navigateTo(Routes.homeView);
                 },
               ),
             ]),

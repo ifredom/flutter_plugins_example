@@ -1,6 +1,6 @@
 import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/constants/app_theme.dart';
+import 'package:pluginexample/core/constants/app_theme.dart';
 
 class SecondScreen extends StatefulWidget {
   @override
@@ -47,6 +47,6 @@ class _SecondScreenState extends State<SecondScreen> with TickerProviderStateMix
                 // feedbackText, feedbackScreenshot).then((value) => BetterFeedback.of(context).hide();
               }),
             },
-        child: Text('BetterFeedback'));
+        child: const Text('BetterFeedback'));
   }
 }

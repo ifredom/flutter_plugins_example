@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/constants/app_theme.dart';
-import 'package:flutter_plugins_example/core/constants/tab_icon_data.dart';
-import 'package:flutter_plugins_example/ui/views/home/first_view/first_view.dart';
-import 'package:flutter_plugins_example/ui/views/home/forth_view/forth_view.dart';
-import 'package:flutter_plugins_example/ui/views/home/home_view/home_view_model.dart';
-import 'package:flutter_plugins_example/ui/views/home/second_view/second_view.dart';
-import 'package:flutter_plugins_example/ui/views/home/third_view/third_view.dart';
-import 'package:flutter_plugins_example/ui/widgets/bottombar/bottom_bar_view.dart';
+import 'package:pluginexample/core/constants/app_theme.dart';
+import 'package:pluginexample/core/constants/tab_icon_data.dart';
+import 'package:pluginexample/ui/views/home/first_view/first_view.dart';
+import 'package:pluginexample/ui/views/home/forth_view/forth_view.dart';
+import 'package:pluginexample/ui/views/home/home_view/home_view_model.dart';
+import 'package:pluginexample/ui/views/home/second_view/second_view.dart';
+import 'package:pluginexample/ui/views/home/third_view/third_view.dart';
+import 'package:pluginexample/ui/widgets/bottombar/bottom_bar_view.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatefulWidget {
@@ -29,9 +29,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
     tabIconsList = TabIconData.tabIconsList;
 
-    tabIconsList.forEach((TabIconData tab) {
+    for (var tab in tabIconsList) {
       tab.isSelected = false;
-    });
+    }
     tabIconsList[0].isSelected = true;
 
     tabBody = FirstScreen(animationController: animationController);

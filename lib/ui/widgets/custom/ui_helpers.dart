@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/utils/res/colors.dart';
+import 'package:pluginexample/core/utils/res/colors.dart';
 
 class ScalingHelper {
-  ScalingHelper({this.width: 750});
+  ScalingHelper({this.width = 750});
 
   // width of the current device
   double width;
@@ -19,7 +19,7 @@ class ScalingHelper {
   double _scale = 1.0;
 
   double size(double value) {
-    return this._t(value) / window.devicePixelRatio;
+    return _t(value) / window.devicePixelRatio;
   }
 
   EdgeInsets fromLTRB(double left, double top, double right, double bottom) {
@@ -46,7 +46,7 @@ class ScalingHelper {
     // Adapt small ones for landscape
     double devWidth = min(window.physicalSize.width, window.physicalSize.height);
 
-    double s = devWidth / this.width;
+    double s = devWidth / width;
 
     var r = value * s;
 

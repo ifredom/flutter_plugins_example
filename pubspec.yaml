@@ -1,12 +1,11 @@
-name: flutter_plugins_example
-description: A new Flutter plugins example
+name: pluginexample
+description: A new Flutter project.
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
-
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -44,11 +43,14 @@ dependencies:
   freezed_annotation: 1.1.0
   built_value: ^8.1.0
   built_collection: ^5.1.0
+  # qrcode(二维码)
+  qr_code_scanner: 0.6.1
   # 蓝牙插件
   flutter_blue: 0.8.0
   # flutter_reactive_ble: 5.0.2
+  # flutter_ble_lib: 2.3.2
   # video 视频
-  fijkplayer: 0.10.1
+  # fijkplayer: 0.10.1
   # qr code scan  二维码扫描
   qr_flutter: 4.0.0
   # webview
@@ -80,7 +82,10 @@ dependencies:
     git:
       url: https://gitee.com/ifredom/flutter_midi
       ref: master # can be replaced to branch or tag name
+  # record(录音)
   flutter_sound: 8.4.2
+  # audio(声音)
+  just_audio: 0.9.18
 
 dev_dependencies:
   flutter_test:
@@ -89,7 +94,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   # mock data  数据模拟
   mockito: ^5.0.0
-  build_runner: ^2.0.1
+  build_runner: ^2.1.5
   built_value_generator: ^8.0.6
   json_serializable: ^6.1.1
   injectable_generator: ^1.5.2
@@ -113,6 +118,7 @@ flutter:
 
     # audio
     - assets/sounds/Piano.sf2
+    - assets/audio/metronome/
     - assets/audio/viper.mp3
 
     # animation

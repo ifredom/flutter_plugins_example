@@ -4,9 +4,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:flutter_plugins_example/core/model/school/school.dart';
-import 'package:flutter_plugins_example/core/model/school/student.dart';
-import 'package:flutter_plugins_example/core/model/school/teacher.dart';
+import 'package:pluginexample/core/model/school/school.dart';
+import 'package:pluginexample/core/model/school/student.dart';
+import 'package:pluginexample/core/model/school/teacher.dart';
 
 import 'userinfo/user.dart';
 

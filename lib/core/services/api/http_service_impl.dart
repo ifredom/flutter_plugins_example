@@ -5,12 +5,12 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart' show Dio, Options, DioError, Response, Headers;
-import 'package:flutter_plugins_example/core/app/app.logger.dart';
-import 'package:flutter_plugins_example/core/app/app.locator.dart';
-import 'package:flutter_plugins_example/core/constants/constants.dart';
-import 'package:flutter_plugins_example/core/services/file_service.dart';
+import 'package:pluginexample/core/app/app.logger.dart';
+import 'package:pluginexample/core/app/app.locator.dart';
+import 'package:pluginexample/core/constants/constants.dart';
+import 'package:pluginexample/core/services/file_service.dart';
 
-import 'package:flutter_plugins_example/core/utils/common/network_utils.dart' as network_utils;
+import 'package:pluginexample/core/utils/common/network_utils.dart' as network_utils;
 import 'common/exception_handle.dart' show ExceptionHandle;
 import 'http_service.dart';
 import 'interceptors/api_interceptor.dart' show ApiInterceptors;
@@ -22,7 +22,7 @@ import 'interceptors/token_interceptor.dart' show TokenInterceptors;
 /// 请求实体类
 class HttpServiceImpl implements HttpService {
   static HttpServiceImpl getInstance() => HttpServiceImpl();
-  static TokenInterceptors _tokenInterceptors = TokenInterceptors();
+  static final TokenInterceptors _tokenInterceptors = TokenInterceptors();
 
   final _log = getLogger('HttpServiceImpl');
 

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import "package:flutter_blue/flutter_blue.dart";
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BluetoothUtil {
   /// 连接状态
@@ -24,32 +23,6 @@ class BluetoothUtil {
   static BluetoothUtil get instance => _instance;
 
   Timer? scanTimer;
-
-  /// 扫描蓝牙设备(可自动连接)
-  void scanDeviceList(int timeout, {String deviceId = ""}) {
-    flutter_blue.startScan(timeout: Duration(seconds: timeout));
-    flutter_blue.scanResults.listen((results) {
-      for (ScanResult r in results) {
-        if (r.device.id.toString() == deviceId &&
-            deviceId != "" &&
-            BluetoothUtil.status != BluetoothDeviceState.connected) {
-          print("auto connect bluetooth id:" + deviceId);
-          r.device.state.listen((data) async {
-            if (data == BluetoothDeviceState.connected) {
-              BluetoothUtil.status = BluetoothDeviceState.connected;
-
-              // saveID,for auto connected (保存ID，为了下次自动连接)
-              SharedPreferences _preferences = await SharedPreferences.getInstance();
-              _preferences.setString("BlueToothID", deviceId);
-
-              updateConnectDevice(r.device);
-            }
-          });
-          r.device.connect();
-        }
-      }
-    });
-  }
 
   /// 扫描蓝牙设备并回调
   void scanDeviceListCallback(int timeout, {Function? findDevice, Function? findFinish}) {
@@ -111,21 +84,6 @@ class BluetoothUtil {
       return false;
     } else {
       return true;
-    }
-  }
-
-  /// 自动连接
-  void autoConnectBlueTooth() async {
-    if (checkBlutToothAvabile()) {
-      // get Id (获取ID)
-      SharedPreferences _preferences = await SharedPreferences.getInstance();
-      String? lastConnectDeviceid = _preferences.getString("BlueToothID");
-
-      if (lastConnectDeviceid != "" && lastConnectDeviceid != null) {
-        scanDeviceList(4, deviceId: lastConnectDeviceid);
-      } else {
-        print("无缓存的蓝牙设备ID");
-      }
     }
   }
 

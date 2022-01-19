@@ -1,4 +1,4 @@
-import 'package:flutter_plugins_example/core/utils/res/local_storage_keys.dart';
+import 'package:pluginexample/core/utils/res/local_storage_keys.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// 读取 .env 文件值

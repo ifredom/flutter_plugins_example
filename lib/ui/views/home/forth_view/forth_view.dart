@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugins_example/core/constants/app_theme.dart';
 import 'dart:math';
 
 class ForthScreen extends StatefulWidget {
+  const ForthScreen({Key? key}) : super(key: key);
+
   @override
   _ForthScreenState createState() => _ForthScreenState();
 }
@@ -10,12 +11,9 @@ class ForthScreen extends StatefulWidget {
 class _ForthScreenState extends State<ForthScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppTheme.background,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: MainWidget(),
-      ),
+    return const Scaffold(
+      backgroundColor: Colors.transparent,
+      body: MainWidget(),
     );
   }
 }

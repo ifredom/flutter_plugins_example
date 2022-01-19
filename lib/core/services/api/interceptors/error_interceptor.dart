@@ -1,6 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart' show Connectivity, ConnectivityResult;
 import 'package:dio/dio.dart' show DioError, InterceptorsWrapper, RequestInterceptorHandler, RequestOptions;
-import 'package:flutter_plugins_example/core/app/app.logger.dart';
+import 'package:pluginexample/core/app/app.logger.dart';
 
 class ErrorInterceptors extends InterceptorsWrapper {
   final _log = getLogger('Api - Interceptor - ErrorInterceptors');

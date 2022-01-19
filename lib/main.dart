@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_plugins_example/ui/views/error_page.dart';
+import 'package:pluginexample/ui/views/error_page.dart';
 
 import './core/Constants/Constants.dart';
 import 'core/app/app.locator.dart';
@@ -27,21 +27,15 @@ void main() async {
     /// Start getit location service(启动GetIt定位服务)
     await setupLocator();
 
-    // Set full screen (设置全屏)
-    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-      // SystemUiOverlay.top,
-      // SystemUiOverlay.bottom,
-    ]);
-
     /// root Widget
-    runApp(RootComponent());
+    runApp(const RootComponent());
   }, (Object error, StackTrace stackTrace) async {
     await _reportError(error, stackTrace);
   });
 }
 
 // Upload application exception information to the server!(上传应用异常信息到日志服务器！)
-Future<Null> _reportError(dynamic error, dynamic stackTrace) async {
+Future<void> _reportError(dynamic error, dynamic stackTrace) async {
   if (Constants.DEBUG) {
     print('Development mode, do not send exceptions to the server. $stackTrace');
     return;
