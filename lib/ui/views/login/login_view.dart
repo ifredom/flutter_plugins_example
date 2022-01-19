@@ -43,7 +43,13 @@ class _LoginViewState extends State<LoginView> {
               Icon(Icons.all_inclusive),
               Icon(Icons.beach_access),
               Icon(Icons.cake),
-              Icon(Icons.free_breakfast)
+              OutlinedButton.icon(
+                icon: Icon(Icons.home),
+                label: Text("home"),
+                onPressed: () {
+                  navigationService.navigateTo(Routes.homeView);
+                },
+              ),
             ]),
       ),
     );

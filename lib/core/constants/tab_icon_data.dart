@@ -17,29 +17,29 @@ class TabIconData {
 
   static List<TabIconData> tabIconsList = <TabIconData>[
     TabIconData(
-      imagePath: 'assets/images/tab_1.png',
-      selectedImagePath: 'assets/images/tab_1s.png',
+      imagePath: 'assets/images/dengta.png',
+      selectedImagePath: 'assets/images/dengta_s.png',
       index: 0,
       isSelected: true,
       // animationController: animationController,
     ),
     TabIconData(
-      imagePath: 'assets/images/tab_2.png',
-      selectedImagePath: 'assets/images/tab_2s.png',
+      imagePath: 'assets/images/tianwenwangyuanjing.png',
+      selectedImagePath: 'assets/images/tianwenwangyuanjing_s.png',
       index: 1,
       isSelected: false,
       // animationController: null,
     ),
     TabIconData(
-      imagePath: 'assets/images/tab_3.png',
-      selectedImagePath: 'assets/images/tab_3s.png',
+      imagePath: 'assets/images/yu.png',
+      selectedImagePath: 'assets/images/yu_s.png',
       index: 2,
       isSelected: false,
       // animationController: null,
     ),
     TabIconData(
-      imagePath: 'assets/images/tab_4.png',
-      selectedImagePath: 'assets/images/tab_4s.png',
+      imagePath: 'assets/images/penjing.png',
+      selectedImagePath: 'assets/images/penjing_s.png',
       index: 3,
       isSelected: false,
       // animationController: null,

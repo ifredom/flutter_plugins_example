@@ -33,11 +33,11 @@ class _SlidingCardsViewState extends State<SlidingCardsView> {
         controller: pageController,
         children: [
           SlidingCard(
-            assetName: 'assets/images/card1.jpeg',
+            assetName: 'assets/images/zhongzhi.png',
             offset: pageOffset,
           ),
           SlidingCard(
-            assetName: 'assets/images/card2.jpeg',
+            assetName: 'assets/images/penzai.png',
             offset: pageOffset - 1,
           ),
         ],

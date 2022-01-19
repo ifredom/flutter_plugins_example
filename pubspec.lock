@@ -443,8 +443,8 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: b37e9e25294364d345540f0a28af6af1183e795e
-      url: "https://github.com/rodydavis/flutter_midi.git"
+      resolved-ref: bb9e1f6dabef3c4244b44005f078996589f4fd34
+      url: "https://gitee.com/ifredom/flutter_midi"
     source: git
     version: "1.1.1"
   flutter_sound:
