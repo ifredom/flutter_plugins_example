@@ -61,7 +61,7 @@ class _LoginViewState extends State<LoginView> {
                 icon: const Icon(Icons.home),
                 label: const Text("home"),
                 onPressed: () {
-                  // navigationService.navigateTo(Routes.homeView);
+                  navigationService.navigateTo(Routes.homeView);
                 },
               ),
             ]),
